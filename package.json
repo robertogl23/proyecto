@@ -3,6 +3,10 @@
   "private": true,
   "version": "1.0.0",
   "description": "",
+  "engines": {
+    "node": "16.13.2",
+    "npm": "8.4.0"
+  },
   "workspaces": [
     "app",
     "api"

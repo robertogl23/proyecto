@@ -9,16 +9,21 @@
   ],
   "scripts": {
     "start": "node build/index.js",
+    "build": "npm run build:prod --workspace api",
+    "build:api": "npm run build:dev --workspace api",
     "dev:app": "npm run dev --workspace app",
-    "dev:build": "npm run build --workspace app",
-    "dev:api": "npm run dev --workspace api",
-    "build:api": "npm run build --workspace api"
+    "build:app": "npm run build --workspace app",
+    "dev:api": "npm run build:api | nodemon build/index.js"
   },
   "keywords": [],
   "author": "Roberto Carlos Galicia Lopez",
   "license": "ISC",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "esbuild": "^0.14.14",
     "nodemon": "^2.0.15"
+  },
+  "dependencies": {
+    "dotenv": "^14.3.2"
   }
 }

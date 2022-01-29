@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "node dist/index.js",
-    "build": "npm run build --workspace api",
+    "build": "cd ./api && npm run build",
     "dev:app": "npm run dev --workspace app",
     "build:app": "npm run build --workspace app",
     "dev:api": "nodemon dist/index.js",

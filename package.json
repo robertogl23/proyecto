@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "start": "node build/index.js",
-    "build": "npm run build:prod --workspace api",
+    "heroku-postbuild": "npm run build:prod --workspace api",
     "build:api": "npm run build:dev --workspace api",
     "dev:app": "npm run dev --workspace app",
     "build:app": "npm run build --workspace app",

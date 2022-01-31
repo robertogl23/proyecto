@@ -6,18 +6,25 @@ import type { ICrudController, IResponseApi } from '../interfaces'
 
 class UserController implements ICrudController<User> {
   private static instance: UserController
-  private responseApi: IResponseApi<User> = {
+  private responseApi: IResponseApi<User | User[]> = {
     data: null,
     message: '',
     statusCode: 200,
   }
+
   // OBTIENE TODOS LOS USUARIOS
   findMany = async (req: Request, res: Response) => {
     try {
       const users: User[] = await db.user.findMany()
-      res.json(users)
+      this.responseApi.data = users
+      this.responseApi.message = 'Usuarios encontrados'
+      this.responseApi.statusCode = 200
     } catch (error) {
-      res.status(500).json({ message: 'Error al obtener todos los usuarios' })
+      this.responseApi.message = 'Error al obtener los usuarios'
+      this.responseApi.statusCode = 500
+      this.responseApi.data = null
+    } finally {
+      res.status(this.responseApi.statusCode).json(this.responseApi)
     }
   }
 
@@ -29,14 +36,20 @@ class UserController implements ICrudController<User> {
         where: { id },
       })
       if (user) {
-        res.json(user)
+        this.responseApi.data = user
+        this.responseApi.message = 'Usuario encontrado'
+        this.responseApi.statusCode = 200
       } else {
-        res
-          .status(404)
-          .json({ message: 'No se encontro usuario con el id ' + id })
+        this.responseApi.message = 'Usuario no encontrado'
+        this.responseApi.statusCode = 404
+        this.responseApi.data = null
       }
     } catch (error) {
-      res.status(500).json({ message: 'Error al buscar usuario por id' })
+      this.responseApi.message = 'Error al obtener el usuario'
+      this.responseApi.statusCode = 500
+      this.responseApi.data = null
+    } finally {
+      res.status(this.responseApi.statusCode).json(this.responseApi)
     }
   }
 
@@ -66,9 +79,15 @@ class UserController implements ICrudController<User> {
         where: { id },
         data: user,
       })
-      res.json(updatedUser)
+      this.responseApi.data = updatedUser
+      this.responseApi.message = 'Usuario actualizado con exito'
+      this.responseApi.statusCode = 200
     } catch (error) {
-      res.status(500).json({ message: 'Error' })
+      this.responseApi.message = 'Error al actualizar el usuario'
+      this.responseApi.statusCode = 500
+      this.responseApi.data = null
+    } finally {
+      res.status(this.responseApi.statusCode).json(this.responseApi)
     }
   }
 
@@ -77,11 +96,15 @@ class UserController implements ICrudController<User> {
     const { id } = req.params
     try {
       const deletedUser = await db.user.delete({ where: { id } })
-      res.json(deletedUser)
+      this.responseApi.data = deletedUser
+      this.responseApi.message = 'Usuario eliminado con exito'
+      this.responseApi.statusCode = 200
     } catch (error) {
-      res
-        .status(500)
-        .json({ message: 'Error al eliminar usuario con el id ' + id })
+      this.responseApi.message = 'Error al eliminar el usuario'
+      this.responseApi.statusCode = 500
+      this.responseApi.data = null
+    } finally {
+      res.status(this.responseApi.statusCode).json(this.responseApi)
     }
   }
 

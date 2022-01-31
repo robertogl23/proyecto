@@ -6,3 +6,4 @@ dist-ssr
 build
 .cache
 .env
+/prisma/dev.db

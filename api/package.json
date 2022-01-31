@@ -10,10 +10,16 @@
   "author": "Roberto Carlos Galicia Lopez",
   "license": "ISC",
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.13",
-    "@types/node": "^17.0.13"
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^17.0.13",
+    "prisma": "^3.8.1"
   },
   "dependencies": {
-    "express": "^4.17.2"
+    "@prisma/client": "^3.8.1",
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.2",
+    "morgan": "^1.10.0"
   }
 }
